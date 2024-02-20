@@ -1,42 +1,42 @@
 Version = "0.X14.4a"
 config = {
-    Magnification: 1.0
+    Magnification: 1.0  #格子大小
     BatteryAlertLevel: 20
     CPUAlertLevel: 90
-    Opacity: 0.5
+    Opacity: 0.7  #不透明度
     Voice: false
-    colourIdle: "rgba(10,10,10,1)"
-    colourWarn: "rgba(256,0,0,1)"
+    colourIdle: "rgba(	95, 158, 160,1)"
+    colourWarn: "rgba(	123, 104, 238)"
     colourDNDS: "rgba(256,96,0,1)"
     colourWhit: "rgba(256,256,256,1)"
-    colourIdleHover: "rgba(128,128,128,1)"
+    colourIdleHover: "rgba(0, 255, 255,1)"
     colourWarnHover: "rgba(128,0,0,1)"
     ShowUpdates: true
     remoteBranch: "dev"
 }
-## If you do not know how to write HTML/CSS, it is best for you to learn it first before
-## attempting to customise the UI. Or you can contact me.
-## Any advise or new idea is welcome. Do not hesitate to contact me, my email is: jetic@me.com
-# Refreshing Frequency is set to once every 3000ms
+# ## If you do not know how to write HTML/CSS, it is best for you to learn it first before
+# ## attempting to customise the UI. Or you can contact me.
+# ## Any advise or new idea is welcome. Do not hesitate to contact me, my email is: jetic@me.com
+# # Refreshing Frequency is set to once every 3000ms
 refreshFrequency: 3000
-# Information on cells
-## Cells consists of three parts. A main body(nav), a top and a bottom(s and b). Cells are rotated
-## 90 degrees to the current position. For special cells (Battery cell, iTunes cell), the toppings
-## and bottoms are slightly different, for example s1, s2, b1, b2, these are modified to cover
-## the gaps between the originally seperated cells. Almost all the elements in the cells are
-## positioned manually, this is to ensure that the UI looks exactly the same on different
-## environments. Übersicht is using the safari engine to render the widgets, therefore the UI under
-## different versions of Safari could be different, if so please contact me and I'll fix this. There
-## are also classes like a0, a1, a2, a3, a4, these act as collective cell controlls allowing me to
-## change the output of all related cells when necessary. ai cells are initially hidden; a1 and a2
-## are used to adjust the lines so that the cells won't crash into each other; a3 is the battery
-## cell; a4 is the console output cell; ax hasn't been used. Contents in the cells can use the
-## classes content of bigger text or contents for smaller text, although most of the time it might
-## be better to adjust the font-size manually. It is obvious that some of the cells are hidden(ai),
-## these can be easily modified to display new contents as you like. I will personally add more to
-## this widget as well. Please look out for my updates and if you've done something amazing with
-## your copy of this widget and want me to add, please contact me.
-##
+# # Information on cells
+# ## Cells consists of three parts. A main body(nav), a top and a bottom(s and b). Cells are rotated
+# ## 90 degrees to the current position. For special cells (Battery cell, iTunes cell), the toppings
+# ## and bottoms are slightly different, for example s1, s2, b1, b2, these are modified to cover
+# ## the gaps between the originally seperated cells. Almost all the elements in the cells are
+# ## positioned manually, this is to ensure that the UI looks exactly the same on different
+# ## environments. Übersicht is using the safari engine to render the widgets, therefore the UI under
+# ## different versions of Safari could be different, if so please contact me and I'll fix this. There
+# ## are also classes like a0, a1, a2, a3, a4, these act as collective cell controlls allowing me to
+# ## change the output of all related cells when necessary. ai cells are initially hidden; a1 and a2
+# ## are used to adjust the lines so that the cells won't crash into each other; a3 is the battery
+# ## cell; a4 is the console output cell; ax hasn't been used. Contents in the cells can use the
+# ## classes content of bigger text or contents for smaller text, although most of the time it might
+# ## be better to adjust the font-size manually. It is obvious that some of the cells are hidden(ai),
+# ## these can be easily modified to display new contents as you like. I will personally add more to
+# ## this widget as well. Please look out for my updates and if you've done something amazing with
+# ## your copy of this widget and want me to add, please contact me.
+# ##
 # You can change the size through adjusting the font-size under style. Default is 1px
 style: """
     font-size: #{config.Magnification}px
@@ -66,7 +66,7 @@ style: """
         display:inline-block
         position:relative
         line-height:58em
-        color:#ffffff
+        color:#afeeee
         float:right
         margin-top:-5em
         margin-left:45em
@@ -235,7 +235,7 @@ style: """
         font-size: 15em
         text-transform: uppercase
     .id
-        font-size:20em
+        font-size:15em
         font-family:Futura
         font-style:normal
     .BatStatus
@@ -250,7 +250,7 @@ style: """
         position:relative
         border-right:11em dotted transparent
         border-left:11em dotted transparent
-        border-top:20em solid #{config.colourWhit}
+        border-top:25em solid #{config.colourWhit}
         right:-40em
         top:-10em
     .iTunesNext
@@ -754,7 +754,7 @@ afterRender: (domEl) ->
         $(domEl).find("#TrashCell   span").text("Trash")
         $(domEl).find(".Wcontent        ").html("<u></u><d></d>#{window.WarningMessage}")
         $(domEl).find("#21     .contentS").html("<u></u><d></d>#{window.WarningMessage}")
-#   Voice
+# #   Voice
     window.voiceCommand = "say -v " + window.voice + " "
 #   Initialise warnings
     window.Bwarning=0
@@ -774,12 +774,48 @@ afterRender: (domEl) ->
 
 
 
-    $(domEl).on 'click', '.iTunesPre', => @run "osascript -e 'tell application \"iTunes\" to previous track'"
-    $(domEl).on 'click', '.iTunesNext', => @run "osascript -e 'tell application \"iTunes\" to next track'"
-    $(domEl).on 'click', '.iTunesPause', => @run "osascript -e 'tell application \"iTunes\" to pause'"
-    $(domEl).on 'click', '.iTunesPlay', => @run "osascript -e 'tell application \"iTunes\" to play'"
-    $(domEl).on 'click', '#TrashCell', => @run "osascript -e 'tell application \"Finder\" to empty'"
-#   Command to open up mounted volumes
+
+
+    $(domEl).on 'click', '.iTunesPre', =>  
+        @run "osascript 'Eva.widget/prev.scpt'",(error, stdout, stderr)->
+            console.log "already click QQ pre!"
+            if stdout
+                console.log stdout
+            if stderr
+                console.error stderr
+
+    #test
+    # $(domEl).on 'click', '.iTunesPre', =>  
+    #     $(domEl).find("#65").css("visibility", "visible")
+   
+
+    $(domEl).on 'click', '.iTunesNext', => 
+        @run "osascript 'Eva.widget/next.scpt'",(error, stdout, stderr)->
+            console.log "already click QQ next!"
+            if stdout
+                console.log stdout
+            if stderr
+                console.error stderr
+    $(domEl).on 'click', '.iTunesPause', => 
+        @run "osascript 'Eva.widget/pause.scpt'",(error, stdout, stderr)->
+            console.log "already click QQ pause!"
+            if stdout
+                console.log stdout
+            if stderr
+                console.error stderr
+    $(domEl).on 'click', '.iTunesPlay', => 
+        @run "osascript 'Eva.widget/pause.scpt'",(error, stdout, stderr)->
+            console.log "already click QQ play!"
+            if stdout
+                console.log stdout
+            if stderr
+                console.error stderr
+    
+    
+    # $(domEl).on 'click', '#TrashCell', => 
+    #     @run "osascript -e 'tell application \"Finder\" to empty'"
+
+#   Command to open up mounted volumes  加载卷
     $(domEl).on 'click', '#66', => @run "ls /Volumes/ | awk -F'\t' '{ print $0}' > tmp.txt;i=1; cat tmp.txt | sed -e 's/[ ]/\\ /g ' | while read line; do if [ \"$i\" -eq 1 ]; then open /Volumes/\"${line}\"; fi; let i=i+1; done; rm tmp.txt
 "
     $(domEl).on 'click', '#69', => @run "ls /Volumes/ | awk -F'\t' '{ print $0}' > tmp.txt;i=1; cat tmp.txt | sed -e 's/[ ]/\\ /g ' | while read line; do if [ \"$i\" -eq 2 ]; then open /Volumes/\"${line}\"; fi; let i=i+1; done; rm tmp.txt
@@ -791,37 +827,41 @@ afterRender: (domEl) ->
     $(domEl).on 'click', '#65', => @run "ls /Volumes/ | awk -F'\t' '{ print $0}' > tmp.txt;i=1; cat tmp.txt | sed -e 's/[ ]/\\ /g ' | while read line; do if [ \"$i\" -eq 5 ]; then open /Volumes/\"${line}\"; fi; let i=i+1; done; rm tmp.txt
 "
 
-    $(domEl).on 'click', '#27', =>
-        $(domEl).find("#27 .contentS").text("loading")
-        @run "head -16 Eva.widget/index.coffee > updateConfig.tmp &&
-            curl -o ../Evangelion_style_dashboard.widget.zip https://raw.githubusercontent.com/jeticg/Evangelion-Uebersicht-Widget/#{config.remoteBranch}/Evangelion_style_dashboard.widget.zip &&
-            cp -r Eva.widget ../Eva.widget &&
-            unzip -o ../Evangelion_style_dashboard.widget.zip -d ../ &&
-            sh ../Eva.widget/updateConfig.sh &&
-            cp -r ../Eva.widget/* ./Eva.widget/ &&
-            rm -r ../Evangelion_style_dashboard.widget.zip &&
-            rm -r ../Eva.widget &&
-            rm -r ../__MACOSX"
+    #更新按钮
+    # $(domEl).on 'click', '#27', =>
+    #     $(domEl).find("#27 .contentS").text("loading")
+    #     @run "head -16 Eva.widget/index.coffee > updateConfig.tmp &&
+    #         curl -o ../Evangelion_style_dashboard.widget.zip https://raw.githubusercontent.com/jeticg/Evangelion-Uebersicht-Widget/#{config.remoteBranch}/Evangelion_style_dashboard.widget.zip &&
+    #         cp -r Eva.widget ../Eva.widget &&
+    #         unzip -o ../Evangelion_style_dashboard.widget.zip -d ../ &&
+    #         sh ../Eva.widget/updateConfig.sh &&
+    #         cp -r ../Eva.widget/* ./Eva.widget/ &&
+    #         rm -r ../Evangelion_style_dashboard.widget.zip &&
+    #         rm -r ../Eva.widget &&
+    #         rm -r ../__MACOSX"
 
     @run "rm Eva.widget/netstat.ipworking", (error, stdout, stderr) ->
     @run 'csrutil status', (error, stdout, stderr) ->
         if stdout
-            console.log stdout
+            console.log "111111111",stdout
         if stderr
-            console.error stderr
+            console.error "22222222",stderr
 
-    url = "https://raw.githubusercontent.com/jeticg/Evangelion-Uebersicht-Widget/#{config.remoteBranch}/widget.json"
-    $.ajax url,
-        dataType: 'json'
-        success: (data, textStatus, jqXHR) ->
-            console.log "Version(Online): #{data.version}"
-            console.log "Version(Local): #{Version}"
-            if Version != data.version
-                console.log "Yoo, you need an update"
-                if config.ShowUpdates == true
-                    $(domEl).find("#27").css("visibility", "visible")
-            else
-                console.log "You have the newest version. OK, you're cool"
+    #版本更新
+    # url = "https://raw.githubusercontent.com/jeticg/Evangelion-Uebersicht-Widget/#{config.remoteBranch}/widget.json"
+    # $.ajax url,
+    #     dataType: 'json'
+    #     success: (data, textStatus, jqXHR) ->
+    #         console.log "Version(Online): #{data.version}"
+    #         console.log "Version(Local): #{Version}"
+    #         if Version != data.version
+    #             console.log "Yoo, you need an update"
+    #             if config.ShowUpdates == true
+    #                 $(domEl).find("#27").css("visibility", "visible")
+    #         else
+    #             console.log "You have the newest version. OK, you're cool"
+    #     error: (jqXHR, textStatus, errorThrown) ->
+    #         console.error "Failed to get version info: #{textStatus}"
 
 update: (output, domEl) ->
 # functions
@@ -907,6 +947,7 @@ update: (output, domEl) ->
                 output = Math.round(output*10)/10 + 'K'
         return output
 
+    #日期时间
     getTime = () ->
         #   Processing time
         # This is for outputing the time. Nothing really
@@ -932,7 +973,7 @@ update: (output, domEl) ->
         $(domEl).find('.day').text("#{daylist[days]}")
 
 
-# Execution
+    # Execution
     getTime()
     window.tiktok += 1
     if (window.tiktok == 3)
@@ -990,15 +1031,16 @@ update: (output, domEl) ->
         else if (MemUsage.indexOf("4") > -1)
             $(domEl).find('.MEMU').text("CRITICAL")
     # Trash
-    @run "du -ch ~/.Trash | grep total | cut -c 1-5", (error, stdout, stderr) ->
-        window.Trashvalues = stdout.split(' ')
-        window.Trashvalues="#{window.Trashvalues}".replace /,/g, ''
-        window.Trashvalues="#{window.Trashvalues}".replace /\s+/g, ''
-        if (Trashvalues.indexOf("0B") > -1)
-            $(domEl).find('.TrashSize').text("#{TrashEmpty}")
-        else
-            $(domEl).find('.TrashSize').text("#{Trashvalues}")
-    # Network status
+    # @run "du -ch ~/.Trash | grep total | cut -c 1-5", (error, stdout, stderr) ->
+    #     window.Trashvalues = stdout.split(' ')
+    #     window.Trashvalues="#{window.Trashvalues}".replace /,/g, ''
+    #     window.Trashvalues="#{window.Trashvalues}".replace /\s+/g, ''
+    #     if (Trashvalues.indexOf("0B") > -1)
+    #         $(domEl).find('.TrashSize').text("#{TrashEmpty}")
+    #     else
+    #         $(domEl).find('.TrashSize').text("#{Trashvalues}")
+
+    # Network status  修改了netstat的内容
     @run "sh Eva.widget/netstat.sh", (error, stdout, stderr) ->
         stdout = stdout.split('\n')
         window.Networkvalues = stdout[0].split(' ')
@@ -1010,7 +1052,7 @@ update: (output, domEl) ->
             window.IPaddress=ErrorMessage
             if IPFehler != 1
                 IPFehler = 1
-                colourChange("#IPCell", config.colourWarn)
+                #colourChange("#IPCell", config.colourWarn)
         else
             if IPFehler != 0
                 IPFehler = 0
@@ -1020,9 +1062,11 @@ update: (output, domEl) ->
             $(domEl).find('.NetU').text("#{NetworkUp}")
         if (NetworkDl?)
             $(domEl).find('.NetD').text("#{NetworkDl}")
-    # Do Not Disturb
-    @run "defaults read ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb", (error, stdout, stderr) ->
-        window.Disturbvalues = stdout[0]
+    
+    # Do Not Disturb  会500 报错
+    # @run "defaults read ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb", (error, stdout, stderr) ->
+    #     window.Disturbvalues = stdout[0]
+
     # iTunes
     @run "sh Eva.widget/iTunes.sh 2>/dev/null", (error, stdout, stderr) ->
         if (stdout.indexOf("osascript: Eva.widget/iTunes.scp:") > -1)
@@ -1064,6 +1108,7 @@ update: (output, domEl) ->
             $(domEl).find('#rate5').css("visibility","visible")
         else
             $(domEl).find('#rate5').css("visibility","hidden")
+
     # Disk
     if (window.tiktok == 0)
         @run "ls -F /Volumes/ | awk -F'\t' '{ print $0}'", (error, stdout, stderr) ->
