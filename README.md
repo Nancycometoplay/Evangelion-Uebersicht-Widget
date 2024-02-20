@@ -1,5 +1,7 @@
 # Evangelion-Übersicht-Widget
 
+
+
 ## Installation
 Who am I kidding, the only thing you need to know is this is a widget for [Übersicht](http://tracesof.net/uebersicht/).
 
@@ -41,6 +43,10 @@ Please consider updating if you are still using widget earlier than 0.X2a. The n
 This widget is an Evangelion Übersicht Widget, displaying information through a huge amount of cells on your desktop.
 
 If you leaves nothing on your desktop except for less than six mounted volumes (system volumes, connected servers etc.), this widget can replace your desktop completely.
+
+
+## 这个分支的修改
+主要是使界面上的音乐控制组件适配qq音乐，前一首、后一首、播放、暂停
 
 ### Currently the widget could show:
 
